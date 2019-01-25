@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using h2n_test.Common;
 
 namespace h2n_test
 {
@@ -32,12 +33,12 @@ namespace h2n_test
 
         }
 
-        RelayCommand.RelayCommand _saveCommand;
+        RelayCommand _saveCommand;
         public ICommand SaveCommand
         {
             get
             {
-                return _saveCommand ?? (_saveCommand = new RelayCommand.RelayCommand(param => Action()));
+                return _saveCommand ?? (_saveCommand = new RelayCommand(param => Action()));
             }
         }
 

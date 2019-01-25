@@ -12,13 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using h2n_test.Common;
 
 namespace h2n_test
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+
+    public partial class MainWindow : CustomWindow
     {
         public MainWindow()
         {
