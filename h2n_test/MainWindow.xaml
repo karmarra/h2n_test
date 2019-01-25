@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:h2n_test"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Calculator" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="1"
+                 Text="{Binding Field, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                 FontSize="28"
+                 FontWeight="DemiBold"
+                 TextAlignment="Right"
+                 MaxLength="16"
+                 MaxLines="1"/>
+        <Button Grid.Row="2"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Content="Text"
+                Command="{Binding SaveCommand}"/>
     </Grid>
 </Window>
