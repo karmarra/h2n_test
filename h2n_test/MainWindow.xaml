@@ -12,23 +12,128 @@
     <common:CustomWindow.DataContext>
         <local:MainWindowViewModel />
     </common:CustomWindow.DataContext>
+    <common:CustomWindow.InputBindings>
+        <KeyBinding Key="D1" Command="{Binding AddNumberCommand}" CommandParameter="1" />
+        <KeyBinding Key="NumPad1" Command="{Binding AddNumberCommand}" CommandParameter="1" />
+
+        <KeyBinding Key="D2" Command="{Binding AddNumberCommand}" CommandParameter="2" />
+        <KeyBinding Key="NumPad2" Command="{Binding AddNumberCommand}" CommandParameter="2" />
+
+        <KeyBinding Key="D3" Command="{Binding AddNumberCommand}" CommandParameter="3" />
+        <KeyBinding Key="NumPad3" Command="{Binding AddNumberCommand}" CommandParameter="3" />
+
+        <KeyBinding Key="D4" Command="{Binding AddNumberCommand}" CommandParameter="4" />
+        <KeyBinding Key="NumPad4" Command="{Binding AddNumberCommand}" CommandParameter="4" />
+
+        <KeyBinding Key="D5" Command="{Binding AddNumberCommand}" CommandParameter="5" />
+        <KeyBinding Key="NumPad5" Command="{Binding AddNumberCommand}" CommandParameter="5" />
+
+        <KeyBinding Key="D6" Command="{Binding AddNumberCommand}" CommandParameter="6" />
+        <KeyBinding Key="NumPad6" Command="{Binding AddNumberCommand}" CommandParameter="6" />
+
+        <KeyBinding Key="D7" Command="{Binding AddNumberCommand}" CommandParameter="7" />
+        <KeyBinding Key="NumPad7" Command="{Binding AddNumberCommand}" CommandParameter="7" />
+
+        <KeyBinding Key="D8" Command="{Binding AddNumberCommand}" CommandParameter="8" />
+        <KeyBinding Key="NumPad8" Command="{Binding AddNumberCommand}" CommandParameter="8" />
+
+        <KeyBinding Key="D9" Command="{Binding AddNumberCommand}" CommandParameter="9" />
+        <KeyBinding Key="NumPad9" Command="{Binding AddNumberCommand}" CommandParameter="9" />
+
+        <KeyBinding Key="D0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
+        <KeyBinding Key="NumPad0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
+    </common:CustomWindow.InputBindings>
+    <common:CustomWindow.Resources>
+        <Style x:Key="ButtonBaseStyle"
+            TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#f2f2f2"/>
+        </Style>
+    </common:CustomWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="1"
-                 Text="{Binding Field, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="28"
+        <TextBlock Grid.Row="1"
+                   TextOptions.TextRenderingMode ="ClearType"
+                   TextOptions.TextFormattingMode="Ideal"
+                   RenderOptions.EdgeMode="Aliased"
+                   RenderOptions.BitmapScalingMode="HighQuality"
+                   RenderOptions.ClearTypeHint="Enabled"
+                 VerticalAlignment="Bottom"
+                 Text="{Binding Field, UpdateSourceTrigger=PropertyChanged}"
+                 FontSize="50"
                  FontWeight="DemiBold"
-                 TextAlignment="Right"
-                 MaxLength="16"
-                 MaxLines="1"/>
+                 Background="Transparent"
+                 TextAlignment="Right"/>
+        <DockPanel Grid.Row="2" LastChildFill="True" >
+            <WrapPanel Orientation="Horizontal">
+                <Button Grid.Row="2"
+                        Content="12341"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="2"/>
+                <Button Grid.Row="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Content="Text"
+                        Command="{Binding AddNumberCommand}"
+                        CommandParameter="1"/>
+                <Button Grid.Row="2"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        Content="Text"
+                        Command="{Binding AddNumberCommand}"
+                        CommandParameter="1"/>
+
+            </WrapPanel>
+<UniformGrid>
+    <Button Grid.Row="2"
+            Content="1"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="1"/>
+
+    <Button Grid.Row="2"
+            Content="2"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="2"/>
+    <Button Grid.Row="2"
+            Content="3"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="3"/>
+    <Button Grid.Row="2"
+            Content="1"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="1"/>
+
+    <Button Grid.Row="2"
+            Content="2"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="2"/>
+    <Button Grid.Row="2"
+            Content="3"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="3"/>
+    <Button Grid.Row="2"
+            Content="1"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="1"/>
+
+    <Button Grid.Row="2"
+            Content="2"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="2"/>
+    <Button Grid.Row="2"
+            Content="3"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="3"/>
+</UniformGrid>
+        </DockPanel>
         <Button Grid.Row="2"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Content="Text"
-                Command="{Binding SaveCommand}"/>
+                Command="{Binding AddNumberCommand}"
+                CommandParameter="1"/>
     </Grid>
 </common:CustomWindow>

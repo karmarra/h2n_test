@@ -5,9 +5,6 @@ namespace h2n_test.Common
 {
     public class CustomWindow : Window
     {
-        public CustomWindow() : base()
-        {
-        }
 
         public override void OnApplyTemplate()
         {

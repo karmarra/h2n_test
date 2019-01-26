@@ -5,6 +5,7 @@
     xmlns:common="clr-namespace:h2n_test.Common">
 
     <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="CustomWindowBackgroundBrush" Color="#ebebeb" />
     <SolidColorBrush x:Key="CustomWindowBorderBrush" Color="#007ACC" />
     <SolidColorBrush x:Key="CustomWindowBorderBrushInactive" Color="#999999" />
     <SolidColorBrush x:Key="CustomWindowStatusForeground" Color="#FFFFFF" />
@@ -65,7 +66,7 @@
                             x:Name="PART_Border"
                             Width="Auto"
                             Height="Auto"
-                            Background="AliceBlue"
+                            Background="{StaticResource CustomWindowBackgroundBrush}"
                             BorderBrush="{StaticResource CustomWindowBorderBrush}"
                             BorderThickness="1"
                             Padding="0">
