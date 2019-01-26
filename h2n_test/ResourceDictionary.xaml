@@ -24,7 +24,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_border" Property="Background" Value="#FFF" />
+                            <Setter TargetName="PART_border" Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                             <Setter TargetName="PART_border" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
@@ -81,60 +81,59 @@
                                         <Grid Height="32"
                                               WindowChrome.IsHitTestVisibleInChrome="True">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition />
-                                                <ColumnDefinition Width="34"/>
-                                                <ColumnDefinition Width="34"/>
-                                                <ColumnDefinition Width="34"/>
+                                                <ColumnDefinition Width="46"/>
+                                                <ColumnDefinition Width="46"/>
+                                                <ColumnDefinition Width="46"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock
                                             x:Name="Caption"
-                                            Grid.Column="1"
+                                            Grid.Column="0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Margin="4,0,0,0"
-                                            FontFamily="Segoe UI"
-                                            FontSize="16"
-                                            FontWeight="DemiBold"
-                                            Opacity="0.66"
+                                            Margin="12,0,0,0"
+                                            FontSize="12"
                                             Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                                             <Button
                                             x:Name="MinButton"
-                                            Grid.Column="2"
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}">
-                                                <Grid MaxHeight="10" MaxWidth="10">
+                                            Grid.Column="1"
+                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                            Foreground="#CCCCCC">
+                                                <Grid Width="10" HorizontalAlignment="Center">
                                                     <Path
-                                                    Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
+                                                     Margin="0 4 0 0"
+                                                    Stroke="Black"
                                                     StrokeThickness="1"
                                                     Stretch="UniformToFill"
                                                     RenderOptions.EdgeMode="Aliased"
-                                                    Data="M0,8 H8 M0,7 H8 M0,6 H8"/>
+                                                    Data="M0,10 H10"/>
+                                                </Grid>
+                                            </Button>
+                                            <Button
+                                            Grid.Column="2"
+                                            x:Name="MaxButton" 
+                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                            Foreground="#CCCCCC">
+                                                <Grid MaxHeight="10" MaxWidth="10">
+                                                    <Path
+                                                    x:Name="PART_MaxButton_Path"
+                                                    Stroke="Black"
+                                                    StrokeThickness="1"
+                                                    Stretch="UniformToFill"
+                                                    Data="M0,0 H10 V10 H0 V0 "/>
                                                 </Grid>
                                             </Button>
                                             <Button
                                             Grid.Column="3"
-                                            x:Name="MaxButton" 
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}">
-                                                <Grid MaxHeight="10" MaxWidth="10">
-                                                    <Path
-                                                    x:Name="PART_MaxButton_Path"
-                                                    Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
-                                                    StrokeThickness="1"
-                                                    Stretch="UniformToFill"
-                                                    RenderOptions.EdgeMode="Aliased"
-                                                    Data="M0,0 H8 V8 H0 V0 M0,1 H8 M0,2 H8"/>
-                                                </Grid>
-                                            </Button>
-                                            <Button
-                                            Grid.Column="4"
                                             x:Name="CloseButton" 
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}">
+                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                            Foreground="Red">
                                                 <Grid MaxHeight="10" MaxWidth="10">
                                                     <Path
-                                                    Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"
-                                                    StrokeThickness="1.5"
-                                                    Stretch="UniformToFill"
-                                                    Data="M0,0 L8,8 M0,8 L8,0"/>
+                                                    Stroke="Black"
+                                                    StrokeThickness="1"
+                                                    Stretch="Fill"
+                                                    Data="M0,0 L10,10 M0,10 L10,0"/>
                                                 </Grid>
                                             </Button>
                                         </Grid>
@@ -146,7 +145,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="WindowState" Value="Maximized">
-                            <Setter TargetName="PART_MaxButton_Path" Property="Data" Value="M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8"/>
+                            <Setter TargetName="PART_MaxButton_Path" Property="Data" Value="M0,2 L6,2 6,8 0,8 0,2 M2,0 L8,0 8,6"/>
                         </Trigger>
                         <Trigger Property="WindowState" Value="Normal">
                             <Setter TargetName="PART_Border" Property="Effect">

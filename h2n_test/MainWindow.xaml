@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:h2n_test"
         xmlns:common="clr-namespace:h2n_test.Common"
         mc:Ignorable="d"
+        FontFamily="Segoe UI"
         Style="{StaticResource CustomWindowStyle}"
         Title="Calculator" Height="450" Width="800">
     <common:CustomWindow.DataContext>
