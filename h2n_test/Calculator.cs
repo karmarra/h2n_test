@@ -6,16 +6,14 @@ using System.Windows.Controls;
 
 namespace h2n_test
 {
-
-    public enum UnaryOperations
+    public enum Operations
     {
+        None,
+        Percent,
         Sqrt,
+        Pow2,
         OneX,
-        Inverse
-    }
-
-    public enum BinaryOperations
-    {
+        Inverse,
         Sum,
         Subtract,
         Multiply,
@@ -24,51 +22,43 @@ namespace h2n_test
 
     public static class Calculator 
     {
-        public static double CalcUnaryOperation(double value, UnaryOperations operation)
+        public static double CalcOperation(Operations operationType, double left, double right = 0, bool isPercent = false)
         {
-            switch (operation)
+            if (isPercent) right = right / 100 * left;
+            switch (operationType)
             {
-                case UnaryOperations.Sqrt:
-                    if (value != 0)
-                        return Math.Pow(value, 0.5);
-                    else
+                case Operations.Percent:
+                    return right / 100 * left;
+                case Operations.Sqrt:
+                    if (left < 0)
                         throw new ArithmeticException("Нельзя извлечь корень из отрицательного числа!");
-                case UnaryOperations.OneX:
-                    if (value != 0)
-                        return 1 / value;
-                    else
+                    return Math.Pow(left, 0.5);
+                case Operations.Pow2:
+                    return left * left;
+                case Operations.OneX:
+                    if (left == 0)
                         throw new DivideByZeroException("Нельзя делить на ноль!");
-                case UnaryOperations.Inverse:
-                    return value * -1;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(operation), operation.ToString());
-            }
-        }
-
-        public static double CalcBinaryOperation(double left, double right, BinaryOperations operation)
-        {
-            switch (operation)
-            {
-                case BinaryOperations.Sum:
+                    return 1 / left;
+                case Operations.Inverse:
+                    return left * -1;
+                case Operations.Sum:
                     return left + right;
-                case BinaryOperations.Subtract:
+                case Operations.Subtract:
                     return left - right;
-                case BinaryOperations.Multiply:
+                case Operations.Multiply:
                         return left * right;
-                case BinaryOperations.Divide:
-                    if (right != 0)
-                        return left / right;
-                    else 
+                case Operations.Divide:
+                    if (right == 0)
                         throw new DivideByZeroException("Нельзя делить на ноль!");
+                    return left / right;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(operation), operation.ToString());
+                    throw new ArgumentOutOfRangeException(nameof(operationType), operationType.ToString());
             }
         }
 
-        public static double CalcPercentOperation(double left, double right, BinaryOperations operation)
+        public static double Percent(Operations operation, double left, double right)
         {
-            return CalcBinaryOperation(left, right / 100 * left, operation);
+            return CalcOperation(operation, left, right / 100 * left );
         }
-
     }
 }

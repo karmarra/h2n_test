@@ -68,72 +68,60 @@
                  Background="Transparent"
                  TextAlignment="Right"/>
         <DockPanel Grid.Row="2" LastChildFill="True" >
-            <WrapPanel Orientation="Horizontal">
-                <Button Grid.Row="2"
-                        Content="12341"
+            <UniformGrid Columns="1">
+                <Button Content="%"
+                        Command="{Binding PercentOperCommand}"/>
+                <Button Content="sqrt(x)"
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="2"/>
-                <Button Grid.Row="2"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Content="Text"
-                        Command="{Binding AddNumberCommand}"
-                        CommandParameter="1"/>
-                <Button Grid.Row="2"
-                        VerticalAlignment="Top"
-                        HorizontalAlignment="Left"
-                        Content="Text"
-                        Command="{Binding AddNumberCommand}"
-                        CommandParameter="1"/>
-
-            </WrapPanel>
-<UniformGrid>
-    <Button Grid.Row="2"
-            Content="1"
+                <Button Content="x^2"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="3"/>
+                <Button Content="1/x"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="4"/>
+            </UniformGrid>
+<UniformGrid Columns="3">
+    <Button Content="1"
             Command="{Binding AddNumberCommand}"
             CommandParameter="1"/>
-
-    <Button Grid.Row="2"
-            Content="2"
+    <Button Content="2"
             Command="{Binding AddNumberCommand}"
             CommandParameter="2"/>
-    <Button Grid.Row="2"
-            Content="3"
+    <Button Content="3"
             Command="{Binding AddNumberCommand}"
             CommandParameter="3"/>
-    <Button Grid.Row="2"
-            Content="1"
+    
+    <Button Content="4"
             Command="{Binding AddNumberCommand}"
-            CommandParameter="1"/>
+            CommandParameter="4"/>
+    <Button Content="5"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="5"/>
+    <Button Content="6"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="6"/>
+    
+    <Button Content="7"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="7"/>
+    <Button Content="8"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="8"/>
+    <Button Content="9"
+            Command="{Binding AddNumberCommand}"
+            CommandParameter="9"/>
 
-    <Button Grid.Row="2"
-            Content="2"
+    <Button Content="+/-"
+            Command="{Binding UnaryOperCommand}"
+            CommandParameter="5"/>
+    <Button Content="0"
             Command="{Binding AddNumberCommand}"
-            CommandParameter="2"/>
-    <Button Grid.Row="2"
-            Content="3"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="3"/>
-    <Button Grid.Row="2"
-            Content="1"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="1"/>
+            CommandParameter="0"/>
+    <Button Content="."
+            Command="{Binding AddPointCommand}"/>
 
-    <Button Grid.Row="2"
-            Content="2"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="2"/>
-    <Button Grid.Row="2"
-            Content="3"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="3"/>
 </UniformGrid>
         </DockPanel>
-        <Button Grid.Row="2"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                Content="Text"
-                Command="{Binding AddNumberCommand}"
-                CommandParameter="1"/>
     </Grid>
 </common:CustomWindow>

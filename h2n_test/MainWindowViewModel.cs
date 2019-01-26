@@ -13,7 +13,12 @@ namespace h2n_test
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private string _field = "";
+        private double _left;
+        private double _right;
+        private bool _needClear = true;
+        private Operations _operation;
+
+        private string _field = "0";
         public string Field
         {
             get => _field;
@@ -26,10 +31,6 @@ namespace h2n_test
             }
         }
 
-        private double _left;
-        private double _right;
-        private BinaryOperations _operation;
-
 
         #region methods
 
@@ -40,14 +41,21 @@ namespace h2n_test
 
         private void AddNumber(string number)
         {
-            if (Field.Length >= 21 || Field.Contains(','))
+            if(_needClear) Field = "";
+            if (Field.Length >= 21)
                 return;
 
             Field += number;
+            _needClear = false;
         }
 
         private void AddPoint()
         {
+            if (_needClear)
+            {
+                Field = "0,";
+                return;
+            }
             if (Field.Length >= 21 || Field.Contains(','))
                 return;
             Field += ',';
@@ -61,42 +69,80 @@ namespace h2n_test
             Field.Remove(Field.Length - 1);
         }
 
+        private void CE()
+        {
+            Field = "0";
+        }
+
+        private void Clear()
+        {
+            Field = "0";
+            _left = _right = 0;
+            _operation = Operations.None;
+        }
+
+
+
         private void UnaryOper(string operType)
         {
             try
             {
-                _left = Calculator.CalcUnaryOperation(0, (UnaryOperations)Enum.Parse(typeof(UnaryOperations), operType));
+                PrepareOper(operType);
+                _left = Calculator.CalcOperation(_operation, _left);
                 Field = Format(_left);
             }
             catch (Exception ee)
             {
                 Field = ee.Message;
             }
-
+            finally
+            {
+                _needClear = true;
+            }
         }
 
-        private void PrepareBinaryOper(string operType)
+        private void PrepareOper(string operType)
+        {
+                if(!Double.TryParse(Field, out _left))
+                    throw new Exception("Ошибка парсинга!");
+                _operation = (Operations)Enum.Parse(typeof(Operations), operType);
+        }
+
+        private void BinaryOper()
         {
             try
             {
-                Double.TryParse(Field, out _left);
-                _operation = (BinaryOperations)Enum.Parse(typeof(BinaryOperations), operType);
-                Field = "0";
-
-                //_left = Calculator.CalcUnaryOperation(0, (UnaryOperations)Enum.Parse(typeof(UnaryOperations), operType));
-                //Field = Format(_left);
+                Double.TryParse(Field, out _right);
+                _left = Calculator.CalcOperation(_operation, _left, _right);
+                Field = Format(_left);
             }
             catch (Exception ee)
             {
                 Field = ee.Message;
             }
-
+            finally
+            {
+                _needClear = true;
+            }
         }
 
-        private void CalcBinaryOper()
+        private void PreparePercentOper()
         {
-            _left = Calculator.CalcBinaryOperation(0, _right, _operation);
+            try
+            {
+                Double.TryParse(Field, out _right);
+                _right = Calculator.CalcOperation(Operations.Percent, _left, _right);
+            }
+            catch (Exception ee)
+            {
+                Field = ee.Message;
+            }
+            finally
+            {
+                _needClear = true;
+            }
         }
+
 
         private RelayCommand _addNumberCommand;
         public ICommand AddNumberCommand
@@ -107,6 +153,16 @@ namespace h2n_test
             }
         }
 
+        private RelayCommand _addPointCommand;
+        public ICommand AddPointCommand
+        {
+            get
+            {
+                return _addPointCommand ?? (_addPointCommand = new RelayCommand(param =>AddPoint()));
+            }
+        }
+
+
         private RelayCommand _unaryOperCommand;
         public ICommand UnaryOperCommand
         {
@@ -116,12 +172,30 @@ namespace h2n_test
             }
         }
 
+        private RelayCommand _prepareBinaryOperCommand;
+        public ICommand PrepareBinaryOperCommand
+        {
+            get
+            {
+                return _prepareBinaryOperCommand ?? (_prepareBinaryOperCommand = new RelayCommand(param => PrepareOper(param.ToString())));
+            }
+        }
+
         private RelayCommand _binaryOperCommand;
         public ICommand BinaryOperCommand
         {
             get
             {
-                return _binaryOperCommand ?? (_binaryOperCommand = new RelayCommand(param => UnaryOper(param.ToString())));
+                return _binaryOperCommand ?? (_binaryOperCommand = new RelayCommand(param => BinaryOper()));
+            }
+        }
+
+        private RelayCommand _percentOperCommand;
+        public ICommand PercentOperCommand
+        {
+            get
+            {
+                return _percentOperCommand ?? (_percentOperCommand = new RelayCommand(param => PreparePercentOper()));
             }
         }
 
