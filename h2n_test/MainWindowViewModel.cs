@@ -15,6 +15,7 @@ namespace h2n_test
     {
         private double _left;
         private double _right;
+        private bool _repeat;
         private bool _needClear = true;
         private Operations _operation;
 
@@ -36,7 +37,7 @@ namespace h2n_test
 
         private string Format(double value)
         {
-            return $"{value:0 0.####}";
+            return $"{value:#### ### ### ##0.####}";
         }
 
         private void AddNumber(string number)
@@ -79,6 +80,7 @@ namespace h2n_test
             Field = "0";
             _left = _right = 0;
             _operation = Operations.None;
+            _repeat = false;
         }
 
 
@@ -106,15 +108,19 @@ namespace h2n_test
                 if(!Double.TryParse(Field, out _left))
                     throw new Exception("Ошибка парсинга!");
                 _operation = (Operations)Enum.Parse(typeof(Operations), operType);
+                _needClear = true;
+                _repeat = false;
         }
 
         private void BinaryOper()
         {
             try
             {
-                Double.TryParse(Field, out _right);
+                if(_operation == Operations.None) return;
+                if(!_repeat) Double.TryParse(Field, out _right);
                 _left = Calculator.CalcOperation(_operation, _left, _right);
                 Field = Format(_left);
+                _repeat = true;
             }
             catch (Exception ee)
             {
@@ -132,6 +138,7 @@ namespace h2n_test
             {
                 Double.TryParse(Field, out _right);
                 _right = Calculator.CalcOperation(Operations.Percent, _left, _right);
+                Field = Format(_right);
             }
             catch (Exception ee)
             {

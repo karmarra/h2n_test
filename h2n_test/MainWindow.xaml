@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         FontFamily="Segoe UI"
         Style="{StaticResource CustomWindowStyle}"
-        Title="Calculator" Height="450" Width="800">
+        Title="Calculator" MinHeight="510" MinWidth="330" Height="600" Width="600">
     <common:CustomWindow.DataContext>
         <local:MainWindowViewModel />
     </common:CustomWindow.DataContext>
@@ -56,6 +56,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="1"
+                   Margin="10"
                    TextOptions.TextRenderingMode ="ClearType"
                    TextOptions.TextFormattingMode="Ideal"
                    RenderOptions.EdgeMode="Aliased"
@@ -79,9 +80,9 @@
                         CommandParameter="3"/>
                 <Button Content="1/x"
                         Command="{Binding UnaryOperCommand}"
-                        CommandParameter="4"/>
+                        CommandParameter="5"/>
             </UniformGrid>
-<UniformGrid Columns="3">
+<UniformGrid Columns="4">
     <Button Content="1"
             Command="{Binding AddNumberCommand}"
             CommandParameter="1"/>
@@ -91,7 +92,10 @@
     <Button Content="3"
             Command="{Binding AddNumberCommand}"
             CommandParameter="3"/>
-    
+    <Button Content="/"
+            Command="{Binding PrepareBinaryOperCommand}"
+            CommandParameter="10"/>
+
     <Button Content="4"
             Command="{Binding AddNumberCommand}"
             CommandParameter="4"/>
@@ -101,7 +105,10 @@
     <Button Content="6"
             Command="{Binding AddNumberCommand}"
             CommandParameter="6"/>
-    
+    <Button Content="*"
+            Command="{Binding PrepareBinaryOperCommand}"
+            CommandParameter="9"/>
+
     <Button Content="7"
             Command="{Binding AddNumberCommand}"
             CommandParameter="7"/>
@@ -111,15 +118,21 @@
     <Button Content="9"
             Command="{Binding AddNumberCommand}"
             CommandParameter="9"/>
-
+    <Button Content="-"
+            Command="{Binding PrepareBinaryOperCommand}"
+            CommandParameter="8"/>
+    
     <Button Content="+/-"
             Command="{Binding UnaryOperCommand}"
-            CommandParameter="5"/>
+            CommandParameter="6"/>
     <Button Content="0"
             Command="{Binding AddNumberCommand}"
             CommandParameter="0"/>
-    <Button Content="."
+    <Button Content=","
             Command="{Binding AddPointCommand}"/>
+    <Button Content="+"
+            Command="{Binding BinaryOperCommand}"
+            CommandParameter="7"/>
 
 </UniformGrid>
         </DockPanel>

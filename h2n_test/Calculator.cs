@@ -12,6 +12,7 @@ namespace h2n_test
         Percent,
         Sqrt,
         Pow2,
+        Pow3,
         OneX,
         Inverse,
         Sum,
@@ -34,7 +35,9 @@ namespace h2n_test
                         throw new ArithmeticException("Нельзя извлечь корень из отрицательного числа!");
                     return Math.Pow(left, 0.5);
                 case Operations.Pow2:
-                    return left * left;
+                    return Math.Pow(left, 2);
+                case Operations.Pow3:
+                    return Math.Pow(left, 3);
                 case Operations.OneX:
                     if (left == 0)
                         throw new DivideByZeroException("Нельзя делить на ноль!");
