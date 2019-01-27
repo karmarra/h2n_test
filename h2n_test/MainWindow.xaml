@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:h2n_test"
         xmlns:common="clr-namespace:h2n_test.Common"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         FontFamily="Segoe UI"
         Style="{StaticResource CustomWindowStyle}"
@@ -44,6 +45,7 @@
         <KeyBinding Key="NumPad0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
     </common:CustomWindow.InputBindings>
     <common:CustomWindow.Resources>
+        <common:SizeToVisibilityConverter x:Key="SizeToVisibilityConverter" />
         <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F4F4F4" />
         <SolidColorBrush x:Key="BaseButtonBorderBrush" Color="#BCBCBC" />
         <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FBFBFB" />
@@ -58,13 +60,18 @@
             <Setter Property="Template" >
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border>
-                            <Border Margin="2" Background="{TemplateBinding Background}"
+                        <Grid>
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="Col2"/>
+                            </Grid.ColumnDefinitions>-->
+                            <Border>
+                            <Border Margin="0" Background="{TemplateBinding Background}"
                                         BorderThickness="{TemplateBinding BorderThickness}">
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Border>
                         </Border>
+                            </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -91,7 +98,7 @@
         </Style>
 
     </common:CustomWindow.Resources>
-    <Grid>
+    <Grid x:Name="BaseGrid" Grid.IsSharedSizeScope="True">
         <Grid.Resources>
             <Style TargetType="{x:Type Button}" 
                    BasedOn="{StaticResource ButtonBaseStyle}"></Style>
@@ -115,25 +122,76 @@
                  FontWeight="DemiBold"
                  Background="Transparent"
                  TextAlignment="Right"/>
-        <DockPanel Grid.Row="2" LastChildFill="True" >
-            <UniformGrid Columns="1">
-                <Button Content="%"
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <UniformGrid Columns="1" >
+                <UniformGrid.Visibility>
+                    <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}">
+                        <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                        <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                    </MultiBinding>
+                </UniformGrid.Visibility>
+                <Button Content="%"  
                         Command="{Binding PercentOperCommand}"/>
-                <Button Content="sqrt(x)"
+                <Button Content="sqrt(x)"  Width="{Binding ElementName=Btn, Path=ActualWidth}"
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="2"/>
-                <Button Content="x^2"
+                <Button Content="x^2"  
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="3"/>
-                <Button Content="x^3"
+                <Button Content="x^3"   
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="4"/>
-                <Button Content="1/x"
+                <Button Content="1/x"  
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="5"/>
             </UniformGrid>
-            <UniformGrid Columns="4">
-                <Button Content="CE"
+
+            <UniformGrid Grid.Column="1" Columns="4">
+                    <Button Content="%" 
+                        Command="{Binding PercentOperCommand}">
+                        <Button.Visibility>
+                            <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                                <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                            </MultiBinding>
+                        </Button.Visibility>
+                    </Button>
+                <Button Content="sqrt(x)"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="2">
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                            <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                            <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+                <Button Content="x^2"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="3">
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                            <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                            <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+                <Button Content="1/x"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="5">
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                            <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                            <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+
+                <Button  x:Name="Btn" Content="CE"
             Command="{Binding CECommand}"/>
                 <Button Content="C"
             Command="{Binding ClearCommand}"/>
@@ -209,6 +267,6 @@
             Command="{Binding BinaryOperCommand}"/>
 
             </UniformGrid>
-        </DockPanel>
+        </Grid>
     </Grid>
 </common:CustomWindow>
