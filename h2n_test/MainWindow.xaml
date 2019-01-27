@@ -78,12 +78,25 @@
                 <Button Content="x^2"
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="3"/>
+                <Button Content="x^3"
+                        Command="{Binding UnaryOperCommand}"
+                        CommandParameter="4"/>
                 <Button Content="1/x"
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="5"/>
             </UniformGrid>
 <UniformGrid Columns="4">
-    <Button Content="1"
+    <Button Content="CE"
+            Command="{Binding CECommand}"/>
+    <Button Content="C"
+            Command="{Binding ClearCommand}"/>
+    <Button Content="bksp"
+            Command="{Binding DeleteNumberCommand}"/>
+    <Button Content="/"
+            Command="{Binding PrepareBinaryOperCommand}"
+            CommandParameter="10"/>
+
+<Button Content="1"
             Command="{Binding AddNumberCommand}"
             CommandParameter="1"/>
     <Button Content="2"
@@ -92,11 +105,11 @@
     <Button Content="3"
             Command="{Binding AddNumberCommand}"
             CommandParameter="3"/>
-    <Button Content="/"
+    <Button Content="*"
             Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="10"/>
+            CommandParameter="9"/>
 
-    <Button Content="4"
+<Button Content="4"
             Command="{Binding AddNumberCommand}"
             CommandParameter="4"/>
     <Button Content="5"
@@ -105,11 +118,11 @@
     <Button Content="6"
             Command="{Binding AddNumberCommand}"
             CommandParameter="6"/>
-    <Button Content="*"
+    <Button Content="+"
             Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="9"/>
+            CommandParameter="7"/>
 
-    <Button Content="7"
+<Button Content="7"
             Command="{Binding AddNumberCommand}"
             CommandParameter="7"/>
     <Button Content="8"
@@ -130,9 +143,8 @@
             CommandParameter="0"/>
     <Button Content=","
             Command="{Binding AddPointCommand}"/>
-    <Button Content="+"
-            Command="{Binding BinaryOperCommand}"
-            CommandParameter="7"/>
+    <Button Content="="
+            Command="{Binding BinaryOperCommand}"/>
 
 </UniformGrid>
         </DockPanel>

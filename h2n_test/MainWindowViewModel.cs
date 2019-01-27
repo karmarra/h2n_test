@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,9 +15,11 @@ namespace h2n_test
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private readonly NumberFormatInfo _numberFormatInfo;
         private double _left;
         private double _right;
         private bool _repeat;
+        private bool _prepared;
         private bool _needClear = true;
         private Operations _operation;
 
@@ -32,21 +36,51 @@ namespace h2n_test
             }
         }
 
+        public ICommand AddNumberCommand { get; }
+        public ICommand DeleteNumberCommand { get; }
+        public ICommand CECommand { get; }
+        public ICommand ClearCommand { get; }
+        public ICommand AddPointCommand { get; }
+        public ICommand UnaryOperCommand { get; }
+        public ICommand PrepareBinaryOperCommand { get; }
+        public ICommand BinaryOperCommand { get; }
+        public ICommand PercentOperCommand { get; }
+
+
+        public MainWindowViewModel()
+        {
+            _numberFormatInfo = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+            _numberFormatInfo.NumberGroupSeparator = " ";
+            _numberFormatInfo.NumberDecimalSeparator = ",";
+            //_numberFormatInfo. = 4;
+
+            AddNumberCommand = new RelayCommand(param => RunMethod(()=>AddNumber(param.ToString())));
+            DeleteNumberCommand = new RelayCommand(param => RunMethod(() => DeleteNumber()));
+            CECommand = new RelayCommand(param => RunMethod(() => CE()));
+            ClearCommand = new RelayCommand(param => RunMethod(() => Clear()));
+            AddPointCommand = new RelayCommand(param => RunMethod(() => AddPoint()));
+            UnaryOperCommand = new RelayCommand(param => RunMethod(() => UnaryOper(param.ToString())));
+            PrepareBinaryOperCommand = new RelayCommand(param => RunMethod(() => PrepareBinaryOper(param.ToString())));
+            BinaryOperCommand = new RelayCommand(param => RunMethod(() => BinaryOper()));
+            PercentOperCommand = new RelayCommand(param => RunMethod(() => PreparePercentOper()));
+        }
 
         #region methods
 
         private string Format(double value)
         {
-            return $"{value:#### ### ### ##0.####}";
+            //var m= value.ToString("R");
+            return string.Format(_numberFormatInfo, "{0:#,0.##############}", value);
         }
 
         private void AddNumber(string number)
         {
-            if(_needClear) Field = "";
-            if (Field.Length >= 21)
+            if (_needClear) Field = "";
+            if (Field.Length >= 19)
                 return;
-
             Field += number;
+            if (Double.TryParse(Field, out var value))
+                Field = Format(value);
             _needClear = false;
         }
 
@@ -62,17 +96,23 @@ namespace h2n_test
             Field += ',';
         }
 
-
         private void DeleteNumber()
         {
             if (!Field.Any())
                 return;
-            Field.Remove(Field.Length - 1);
+            if (Field.Length == 1)
+            {
+                CE();
+                return;
+            }
+            Field = Field.Remove(Field.Length - 1).Trim();
         }
 
         private void CE()
         {
             Field = "0";
+            _repeat = false;
+            _needClear = true;
         }
 
         private void Clear()
@@ -81,129 +121,71 @@ namespace h2n_test
             _left = _right = 0;
             _operation = Operations.None;
             _repeat = false;
+            _needClear = true;
+            _prepared = false;
         }
-
-
 
         private void UnaryOper(string operType)
         {
-            try
-            {
                 PrepareOper(operType);
                 _left = Calculator.CalcOperation(_operation, _left);
                 Field = Format(_left);
-            }
-            catch (Exception ee)
-            {
-                Field = ee.Message;
-            }
-            finally
-            {
                 _needClear = true;
-            }
+                _prepared = false;
         }
 
         private void PrepareOper(string operType)
         {
-                if(!Double.TryParse(Field, out _left))
-                    throw new Exception("Ошибка парсинга!");
-                _operation = (Operations)Enum.Parse(typeof(Operations), operType);
-                _needClear = true;
+            if (_prepared) BinaryOper();
+            if (!Double.TryParse(Field.Trim(), out _left))
+                throw new Exception("Ошибка парсинга!");
+            _operation = (Operations)Enum.Parse(typeof(Operations), operType);
+            _needClear = true;
+        }
+
+        private void PrepareBinaryOper(string operType)
+        {
+                PrepareOper(operType);
                 _repeat = false;
+                _prepared = true;
         }
 
         private void BinaryOper()
         {
-            try
-            {
-                if(_operation == Operations.None) return;
-                if(!_repeat) Double.TryParse(Field, out _right);
+                if (_operation == Operations.None) return;
+                if (!_repeat) Double.TryParse(Field, out _right);
                 _left = Calculator.CalcOperation(_operation, _left, _right);
                 Field = Format(_left);
                 _repeat = true;
-            }
-            catch (Exception ee)
-            {
-                Field = ee.Message;
-            }
-            finally
-            {
                 _needClear = true;
-            }
+                _prepared = false;
         }
 
         private void PreparePercentOper()
         {
-            try
-            {
                 Double.TryParse(Field, out _right);
                 _right = Calculator.CalcOperation(Operations.Percent, _left, _right);
                 Field = Format(_right);
+                _needClear = true;
+        }
+
+        private void RunMethod(Action action)
+        {
+            RunMethod(() => { action(); return 0; });
+        }
+
+        private T RunMethod<T>(Func<T> action)
+        {
+            try
+            {
+                return action();
             }
             catch (Exception ee)
             {
                 Field = ee.Message;
-            }
-            finally
-            {
                 _needClear = true;
             }
-        }
-
-
-        private RelayCommand _addNumberCommand;
-        public ICommand AddNumberCommand
-        {
-            get
-            {
-                return _addNumberCommand ?? (_addNumberCommand = new RelayCommand(param => AddNumber(param.ToString())));
-            }
-        }
-
-        private RelayCommand _addPointCommand;
-        public ICommand AddPointCommand
-        {
-            get
-            {
-                return _addPointCommand ?? (_addPointCommand = new RelayCommand(param =>AddPoint()));
-            }
-        }
-
-
-        private RelayCommand _unaryOperCommand;
-        public ICommand UnaryOperCommand
-        {
-            get
-            {
-                return _unaryOperCommand ?? (_unaryOperCommand = new RelayCommand(param => UnaryOper(param.ToString())));
-            }
-        }
-
-        private RelayCommand _prepareBinaryOperCommand;
-        public ICommand PrepareBinaryOperCommand
-        {
-            get
-            {
-                return _prepareBinaryOperCommand ?? (_prepareBinaryOperCommand = new RelayCommand(param => PrepareOper(param.ToString())));
-            }
-        }
-
-        private RelayCommand _binaryOperCommand;
-        public ICommand BinaryOperCommand
-        {
-            get
-            {
-                return _binaryOperCommand ?? (_binaryOperCommand = new RelayCommand(param => BinaryOper()));
-            }
-        }
-
-        private RelayCommand _percentOperCommand;
-        public ICommand PercentOperCommand
-        {
-            get
-            {
-                return _percentOperCommand ?? (_percentOperCommand = new RelayCommand(param => PreparePercentOper()));
-            }
+            return default(T);
         }
 
 
@@ -216,7 +198,7 @@ namespace h2n_test
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-       
+
         #endregion INotifyPropertyChanged
     }
 }
