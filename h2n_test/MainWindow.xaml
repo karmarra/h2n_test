@@ -44,12 +44,58 @@
         <KeyBinding Key="NumPad0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
     </common:CustomWindow.InputBindings>
     <common:CustomWindow.Resources>
+        <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F4F4F4" />
+        <SolidColorBrush x:Key="BaseButtonBorderBrush" Color="#BCBCBC" />
+        <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FBFBFB" />
+        <SolidColorBrush x:Key="HoverButtonBackgroundBrush" Color="#DADADA" />
+        <SolidColorBrush x:Key="HoverBinaryButtonBackgroundBrush" Color="#007ACC" />
         <Style x:Key="ButtonBaseStyle"
             TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#f2f2f2"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Background" Value="{StaticResource BaseButtonBackgroundBrush}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border>
+                            <Border Margin="2" Background="{TemplateBinding Background}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource HoverButtonBackgroundBrush}"/>
+                    </Trigger>
+            </Style.Triggers>
         </Style>
+        <Style x:Key="NumberButtonStyle"
+               BasedOn="{StaticResource ButtonBaseStyle}"
+               TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{StaticResource NumberButtonBackgroundBrush}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="BinaryButtonStyle"
+               BasedOn="{StaticResource ButtonBaseStyle}"
+               TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource HoverBinaryButtonBackgroundBrush}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </common:CustomWindow.Resources>
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" 
+                   BasedOn="{StaticResource ButtonBaseStyle}"></Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -64,6 +110,7 @@
                    RenderOptions.ClearTypeHint="Enabled"
                  VerticalAlignment="Bottom"
                  Text="{Binding Field, UpdateSourceTrigger=PropertyChanged}"
+                   TextWrapping="Wrap"
                  FontSize="50"
                  FontWeight="DemiBold"
                  Background="Transparent"
@@ -85,68 +132,83 @@
                         Command="{Binding UnaryOperCommand}"
                         CommandParameter="5"/>
             </UniformGrid>
-<UniformGrid Columns="4">
-    <Button Content="CE"
+            <UniformGrid Columns="4">
+                <Button Content="CE"
             Command="{Binding CECommand}"/>
-    <Button Content="C"
+                <Button Content="C"
             Command="{Binding ClearCommand}"/>
-    <Button Content="bksp"
+                <Button Content="bksp"
             Command="{Binding DeleteNumberCommand}"/>
-    <Button Content="/"
+                <Button Style="{StaticResource BinaryButtonStyle}"
+                    Content="/"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="10"/>
 
-<Button Content="1"
+                <Button Style="{StaticResource NumberButtonStyle}"
+                    Content="1"
             Command="{Binding AddNumberCommand}"
             CommandParameter="1"/>
-    <Button Content="2"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="2"
             Command="{Binding AddNumberCommand}"
             CommandParameter="2"/>
-    <Button Content="3"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="3"
             Command="{Binding AddNumberCommand}"
             CommandParameter="3"/>
-    <Button Content="*"
+                <Button Style="{StaticResource BinaryButtonStyle}"
+                        Content="*"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="9"/>
 
-<Button Content="4"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="4"
             Command="{Binding AddNumberCommand}"
             CommandParameter="4"/>
-    <Button Content="5"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="5"
             Command="{Binding AddNumberCommand}"
             CommandParameter="5"/>
-    <Button Content="6"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="6"
             Command="{Binding AddNumberCommand}"
             CommandParameter="6"/>
-    <Button Content="+"
+                <Button Style="{StaticResource BinaryButtonStyle}"
+                        Content="+"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="7"/>
 
-<Button Content="7"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="7"
             Command="{Binding AddNumberCommand}"
             CommandParameter="7"/>
-    <Button Content="8"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="8"
             Command="{Binding AddNumberCommand}"
             CommandParameter="8"/>
-    <Button Content="9"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="9"
             Command="{Binding AddNumberCommand}"
             CommandParameter="9"/>
-    <Button Content="-"
+                <Button Style="{StaticResource BinaryButtonStyle}"
+                        Content="-"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="8"/>
-    
-    <Button Content="+/-"
+
+                <Button Content="+/-"
             Command="{Binding UnaryOperCommand}"
             CommandParameter="6"/>
-    <Button Content="0"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="0"
             Command="{Binding AddNumberCommand}"
             CommandParameter="0"/>
-    <Button Content=","
+                <Button Content=","
             Command="{Binding AddPointCommand}"/>
-    <Button Content="="
+                <Button Style="{StaticResource BinaryButtonStyle}"
+                        Content="="
             Command="{Binding BinaryOperCommand}"/>
 
-</UniformGrid>
+            </UniformGrid>
         </DockPanel>
     </Grid>
 </common:CustomWindow>
