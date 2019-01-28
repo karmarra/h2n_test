@@ -46,9 +46,9 @@
     </common:CustomWindow.InputBindings>
     <common:CustomWindow.Resources>
         <common:SizeToVisibilityConverter x:Key="SizeToVisibilityConverter" />
-        <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F4F4F4" />
+        <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F0F0F0" />
         <SolidColorBrush x:Key="BaseButtonBorderBrush" Color="#BCBCBC" />
-        <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FBFBFB" />
+        <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FAFAFA" />
         <SolidColorBrush x:Key="HoverButtonBackgroundBrush" Color="#DADADA" />
         <SolidColorBrush x:Key="HoverBinaryButtonBackgroundBrush" Color="#007ACC" />
         <Style x:Key="ButtonBaseStyle"
@@ -202,18 +202,19 @@
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="10"/>
 
-                <Button Style="{StaticResource NumberButtonStyle}"
-                    Content="1"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="1"/>
                 <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="2"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="2"/>
+                         Content="7"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="7"/>
                 <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="3"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="3"/>
+                         Content="8"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="8"/>
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="9"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="9"/>
+
                 <Button Style="{StaticResource BinaryButtonStyle}"
                         Content="*"
             Command="{Binding PrepareBinaryOperCommand}"
@@ -236,18 +237,19 @@
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="7"/>
 
+                <Button Style="{StaticResource NumberButtonStyle}"
+                        Content="1"
+                        Command="{Binding AddNumberCommand}"
+                        CommandParameter="1"/>
                 <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="7"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="7"/>
+                         Content="2"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="2"/>
                 <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="8"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="8"/>
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="9"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="9"/>
+                         Content="3"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="3"/>
+
                 <Button Style="{StaticResource BinaryButtonStyle}"
                         Content="-"
             Command="{Binding PrepareBinaryOperCommand}"

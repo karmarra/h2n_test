@@ -5,7 +5,7 @@
     xmlns:common="clr-namespace:h2n_test.Common">
 
     <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="CustomWindowBackgroundBrush" Color="#ebebeb" />
+    <SolidColorBrush x:Key="CustomWindowBackgroundBrush" Color="#E6E6E6" />
     <SolidColorBrush x:Key="CustomWindowBorderBrush" Color="#007ACC" />
     <SolidColorBrush x:Key="CustomWindowBorderBrushInactive" Color="#999999" />
     <SolidColorBrush x:Key="CustomWindowStatusForeground" Color="#FFFFFF" />
@@ -40,8 +40,8 @@
     </Style>
 
     <Style x:Key="CustomWindowStyle" TargetType="{x:Type common:CustomWindow}">
-        <Setter Property="WindowStyle" Value="None" />
-        <Setter Property="AllowsTransparency" Value="true" />
+        <!--<Setter Property="WindowStyle" Value="None" />-->
+        <!--<Setter Property="AllowsTransparency" Value="true" />-->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
         <Setter Property="WindowChrome.WindowChrome">
@@ -57,8 +57,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type common:CustomWindow}">
                     <Border
-                        x:Name="PART_Container"
-                        Padding="7 7 7 5">
+                        x:Name="PART_Container">
                         <Grid
                         TextOptions.TextRenderingMode="ClearType"
                         TextOptions.TextFormattingMode="Display">
@@ -66,10 +65,13 @@
                             x:Name="PART_Border"
                             Width="Auto"
                             Height="Auto"
-                            Background="{StaticResource CustomWindowBackgroundBrush}"
+                            Background="#CCEEEEEE"
                             BorderBrush="{StaticResource CustomWindowBorderBrush}"
                             BorderThickness="1"
                             Padding="0">
+                                <Border.Effect>
+                                    <BlurEffect KernelType="Box"/>
+                                </Border.Effect>
                                 <DockPanel
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent"
@@ -94,6 +96,7 @@
                                             VerticalAlignment="Center"
                                             Margin="12,0,0,0"
                                             FontSize="12"
+                                            WindowChrome.IsHitTestVisibleInChrome="False"
                                             Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
                                             <Button
                                             x:Name="MinButton"
