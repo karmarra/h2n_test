@@ -10,6 +10,11 @@
     <SolidColorBrush x:Key="CustomWindowBorderBrushInactive" Color="#999999" />
     <SolidColorBrush x:Key="CustomWindowStatusForeground" Color="#FFFFFF" />
     <SolidColorBrush x:Key="CustomWindowStatusForegroundInactive" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F4F4F4" />
+    <SolidColorBrush x:Key="BaseButtonBorderBrush" Color="#BCBCBC" />
+    <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FBFBFB" />
+    <SolidColorBrush x:Key="HoverButtonBackgroundBrush" Color="#DADADA" />
+    <SolidColorBrush x:Key="HoverBinaryButtonBackgroundBrush" Color="#007ACC" />
 
     <Style x:Key="CustomWindowStyleTitleBarButton" TargetType="{x:Type Button}">
         <Setter Property="Focusable" Value="false" />
