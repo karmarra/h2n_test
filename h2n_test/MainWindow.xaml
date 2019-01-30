@@ -45,58 +45,8 @@
         <KeyBinding Key="NumPad0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
     </common:CustomWindow.InputBindings>
     <common:CustomWindow.Resources>
-        <common:SizeToVisibilityConverter x:Key="SizeToVisibilityConverter" />
-        <Style x:Key="ButtonBaseStyle"
-            TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="{StaticResource BaseButtonBackgroundBrush}"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid>
-                            <Border HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Stretch" 
-                                    BorderThickness="1" 
-                                    BorderBrush="{StaticResource CustomWindowBackgroundBrush}" 
-                                    IsHitTestVisible="False"/>
-                            <Border HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Stretch" 
-                                    Margin="2" 
-                                    Background="{TemplateBinding Background}" 
-                                    IsHitTestVisible="True"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource HoverButtonBackgroundBrush}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="NumberButtonStyle"
-               BasedOn="{StaticResource ButtonBaseStyle}"
-               TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="{StaticResource NumberButtonBackgroundBrush}"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-        <Style x:Key="BinaryButtonStyle"
-               BasedOn="{StaticResource ButtonBaseStyle}"
-               TargetType="{x:Type Button}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{StaticResource HoverBinaryButtonBackgroundBrush}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </common:CustomWindow.Resources>
-    <Grid x:Name="BaseGrid" Grid.IsSharedSizeScope="True">
+    <Grid x:Name="BaseGrid" Grid.IsSharedSizeScope="True" common:BordersBesideMouse.Enabled="True">
         <Grid.Resources>
             <Style TargetType="{x:Type Button}" 
                    BasedOn="{StaticResource ButtonBaseStyle}"/>
@@ -107,7 +57,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="1"
-                   Margin="10 10 10 0"
+                   Margin="10"
                    TextOptions.TextRenderingMode ="ClearType"
                    TextOptions.TextFormattingMode="Ideal"
                    RenderOptions.EdgeMode="Aliased"
@@ -121,10 +71,7 @@
                    Background="Transparent"
                    TextAlignment="Right"/>
         <Border Grid.Row="2" 
-                BorderThickness="0 10 0 0"
-                Name="Brd" 
-                MouseMove="Brd_OnMouseMove"
-                MouseLeave="Brd_OnMouseLeave">
+                Name="Brd">
             <Border.Background>
                 <RadialGradientBrush x:Name="Grd" 
                                      RadiusX="0.12" 
