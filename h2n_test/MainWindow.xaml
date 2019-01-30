@@ -161,19 +161,20 @@
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="10"/>
 
-                    <Button Style="{StaticResource NumberButtonStyle}"
-                    Content="1"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="1"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="2"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="2"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="3"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="3"/>
-                    <Button Style="{StaticResource BinaryButtonStyle}"
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="7"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="7"/>
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="8"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="8"/>
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="9"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="9"/>
+
+                <Button Style="{StaticResource BinaryButtonStyle}"
                         Content="*"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="9"/>
@@ -195,19 +196,20 @@
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="7"/>
 
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="7"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="7"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="8"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="8"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="9"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="9"/>
-                    <Button Style="{StaticResource BinaryButtonStyle}"
+                <Button Style="{StaticResource NumberButtonStyle}"
+                        Content="1"
+                        Command="{Binding AddNumberCommand}"
+                        CommandParameter="1"/>
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="2"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="2"/>
+                <Button  Style="{StaticResource NumberButtonStyle}"
+                         Content="3"
+                         Command="{Binding AddNumberCommand}"
+                         CommandParameter="3"/>
+
+                <Button Style="{StaticResource BinaryButtonStyle}"
                         Content="-"
             Command="{Binding PrepareBinaryOperCommand}"
             CommandParameter="8"/>
