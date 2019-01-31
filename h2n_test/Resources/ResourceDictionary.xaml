@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="CustomWindowBorderBrushInactive" Color="#999999" />
     <SolidColorBrush x:Key="CustomWindowStatusForeground" Color="#FFFFFF" />
     <SolidColorBrush x:Key="CustomWindowStatusForegroundInactive" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#F4F4F4" />
+    <SolidColorBrush x:Key="BaseButtonBackgroundBrush" Color="#CCF4F4F4" />
     <SolidColorBrush x:Key="BaseButtonBorderBrush" Color="#BCBCBC" />
     <SolidColorBrush x:Key="NumberButtonBackgroundBrush" Color="#FBFBFB" />
     <SolidColorBrush x:Key="HoverButtonBackgroundBrush" Color="#DADADA" />
@@ -23,7 +23,7 @@
             TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource BaseButtonBackgroundBrush}"/>
         <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Margin" Value="0.5"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template" >
             <Setter.Value>
@@ -101,8 +101,6 @@
     </Style>
 
     <Style x:Key="CustomWindowStyle" TargetType="{x:Type common:CustomWindow}">
-        <!--<Setter Property="WindowStyle" Value="None" />-->
-        <!--<Setter Property="AllowsTransparency" Value="true" />-->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
         <Setter Property="WindowChrome.WindowChrome">
@@ -120,91 +118,95 @@
                     <Border
                         x:Name="PART_Container">
                         <Grid
-                        TextOptions.TextRenderingMode="ClearType"
-                        TextOptions.TextFormattingMode="Display">
+                            TextOptions.TextRenderingMode="ClearType"
+                            TextOptions.TextFormattingMode="Display">
+                            <Border Opacity="0.3">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="/h2n_test;component/Resources/black_noise.png"
+                                                TileMode="Tile" Stretch="None"
+                                                ViewportUnits="Absolute" Viewport="0,0,128,128"/>
+                                </Border.Background>
+                            </Border>
                             <Border
-                            x:Name="PART_Border"
-                            Width="Auto"
-                            Height="Auto"
-                            Background="#CCEEEEEE"
-                            BorderBrush="{StaticResource CustomWindowBorderBrush}"
-                            BorderThickness="1"
-                            Padding="0">
-                                <Border.Effect>
-                                    <BlurEffect KernelType="Box"/>
-                                </Border.Effect>
-                                <DockPanel
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent"
-                                VerticalAlignment="Stretch">
-                                    <Border
-                                    x:Name="TitleBar"
-                                    DockPanel.Dock="Top"
-                                    Background="{StaticResource TitleBarBackgroundBrush}"
-                                    BorderThickness="0">
-                                        <Grid Height="32"
-                                              WindowChrome.IsHitTestVisibleInChrome="True">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition Width="46"/>
-                                                <ColumnDefinition Width="46"/>
-                                                <ColumnDefinition Width="46"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock
-                                            x:Name="Caption"
-                                            Grid.Column="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            Margin="12,0,0,0"
-                                            FontSize="12"
-                                            WindowChrome.IsHitTestVisibleInChrome="False"
-                                            Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                            <Button
-                                            x:Name="MinButton"
-                                            Grid.Column="1"
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
-                                            Foreground="#CCCCCC">
-                                                <Grid Width="10" HorizontalAlignment="Center">
-                                                    <Path
-                                                     Margin="0 4 0 0"
-                                                    Stroke="Black"
-                                                    StrokeThickness="1"
-                                                    Stretch="UniformToFill"
-                                                    RenderOptions.EdgeMode="Aliased"
-                                                    Data="M0,10 H10"/>
-                                                </Grid>
-                                            </Button>
-                                            <Button
-                                            Grid.Column="2"
-                                            x:Name="MaxButton" 
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
-                                            Foreground="#CCCCCC">
-                                                <Grid MaxHeight="10" MaxWidth="10">
-                                                    <Path
-                                                    x:Name="PART_MaxButton_Path"
-                                                    Stroke="Black"
-                                                    StrokeThickness="1"
-                                                    Stretch="UniformToFill"
-                                                    Data="M0,0 H10 V10 H0 V0 "/>
-                                                </Grid>
-                                            </Button>
-                                            <Button
-                                            Grid.Column="3"
-                                            x:Name="CloseButton" 
-                                            Style="{StaticResource CustomWindowStyleTitleBarButton}"
-                                            Foreground="Red">
-                                                <Grid MaxHeight="10" MaxWidth="10">
-                                                    <Path
-                                                    Stroke="Black"
-                                                    StrokeThickness="1"
-                                                    Stretch="Fill"
-                                                    Data="M0,0 L10,10 M0,10 L10,0"/>
-                                                </Grid>
-                                            </Button>
-                                        </Grid>
-                                    </Border>
-                                    <ContentPresenter />
-                                </DockPanel>
+                                x:Name="PART_Border"
+                                Width="Auto"
+                                Height="Auto"
+                                Background="#CCCCCCCC"
+                                BorderBrush="{StaticResource CustomWindowBorderBrush}"
+                                BorderThickness="1"
+                                Padding="0">
+                                    <DockPanel
+                                        HorizontalAlignment="Stretch"
+                                        Background="Transparent"
+                                        VerticalAlignment="Stretch">
+                                        <Border
+                                        x:Name="TitleBar"
+                                        DockPanel.Dock="Top"
+                                        Background="{StaticResource TitleBarBackgroundBrush}"
+                                        BorderThickness="0">
+                                            <Grid Height="32"
+                                                  WindowChrome.IsHitTestVisibleInChrome="True">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="46"/>
+                                                    <ColumnDefinition Width="46"/>
+                                                    <ColumnDefinition Width="46"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                x:Name="Caption"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Margin="12,0,0,0"
+                                                FontSize="12"
+                                                WindowChrome.IsHitTestVisibleInChrome="False"
+                                                Text="{Binding Path=Title, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                <Button
+                                                x:Name="MinButton"
+                                                Grid.Column="1"
+                                                Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                                Foreground="#CCCCCC">
+                                                    <Grid Width="10" HorizontalAlignment="Center">
+                                                        <Path
+                                                         Margin="0 4 0 0"
+                                                        Stroke="Black"
+                                                        StrokeThickness="1"
+                                                        Stretch="UniformToFill"
+                                                        RenderOptions.EdgeMode="Aliased"
+                                                        Data="M0,10 H10"/>
+                                                    </Grid>
+                                                </Button>
+                                                <Button
+                                                Grid.Column="2"
+                                                x:Name="MaxButton" 
+                                                Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                                Foreground="#CCCCCC">
+                                                    <Grid MaxHeight="10" MaxWidth="10">
+                                                        <Path
+                                                        x:Name="PART_MaxButton_Path"
+                                                        Stroke="Black"
+                                                        StrokeThickness="1"
+                                                        Stretch="UniformToFill"
+                                                        Data="M0,0 H10 V10 H0 V0 "/>
+                                                    </Grid>
+                                                </Button>
+                                                <Button
+                                                Grid.Column="3"
+                                                x:Name="CloseButton" 
+                                                Style="{StaticResource CustomWindowStyleTitleBarButton}"
+                                                Foreground="Red">
+                                                    <Grid MaxHeight="10" MaxWidth="10">
+                                                        <Path
+                                                        Stroke="Black"
+                                                        StrokeThickness="1"
+                                                        Stretch="Fill"
+                                                        Data="M0,0 L10,10 M0,10 L10,0"/>
+                                                    </Grid>
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                        <ContentPresenter />
+                                    </DockPanel>
                             </Border>
                         </Grid>
                     </Border>
@@ -226,6 +228,7 @@
                         </Trigger>
                         <Trigger Property="IsActive" Value="False">
                             <Setter TargetName="PART_Border" Property="BorderBrush" Value="{StaticResource CustomWindowBorderBrushInactive}"/>
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource CustomWindowBackgroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

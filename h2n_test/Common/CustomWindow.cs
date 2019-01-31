@@ -39,15 +39,12 @@ namespace h2n_test.Common
 
         private void MaxButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (WindowState == WindowState.Maximized) SystemCommands.RestoreWindow(this);
+            if (WindowState == WindowState.Maximized)
+            {
+                SystemCommands.RestoreWindow(this);
+            }
             else
             {
-                //DisableBlur();
-                Margin = new Thickness(7, 7 , 7 , 5);
-                //Height = System.Windows.SystemParameters.WorkArea.Height;
-                //Width = System.Windows.SystemParameters.WorkArea.Width;
-                //Positi
-
                 SystemCommands.MaximizeWindow(this);
             }
         }
@@ -92,33 +89,33 @@ namespace h2n_test.Common
         }
 
 
-        [Flags]
-        internal enum DwmBlurBehindFlags : uint
-        {
-            DWM_BB_ENABLE = 0x00000001,
-            DWM_BB_BLURREGION = 0x00000002,
-            DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004
-        }
+        //[Flags]
+        //internal enum DwmBlurBehindFlags : uint
+        //{
+        //    DWM_BB_ENABLE = 0x00000001,
+        //    DWM_BB_BLURREGION = 0x00000002,
+        //    DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004
+        //}
 
 
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct DWM_BLURBEHIND
-        {
-            public DwmBlurBehindFlags dwFlags;
-            public bool fEnable;
-            public IntPtr hRgnBlur;
-            public bool fTransitionOnMaximized;
-        }
+        //[StructLayout(LayoutKind.Sequential)]
+        //internal struct DWM_BLURBEHIND
+        //{
+        //    public DwmBlurBehindFlags dwFlags;
+        //    public bool fEnable;
+        //    public IntPtr hRgnBlur;
+        //    public bool fTransitionOnMaximized;
+        //}
 
 
         [DllImport("user32.dll")]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
-        [DllImport("dwmapi.dll", PreserveSig = true)]
-        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+        //[DllImport("dwmapi.dll", PreserveSig = true)]
+        //internal static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        internal static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
+        //[DllImport("dwmapi.dll", PreserveSig = false)]
+        //internal static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 
 
         internal void EnableBlur()
@@ -134,7 +131,7 @@ namespace h2n_test.Common
              else if (currentVersion.Major == 6)
                 accent.AccentState = currentVersion.Minor > 1 ? AccentState.ACCENT_ENABLE_BLURBEHIND : AccentState.ACCENT_ENABLE_TRANSPARENTGRADIENT;
 
-
+            accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
             accent.AccentFlags = 2;
             accent.GradientColor = 0x00FFFFFF;  
 
@@ -151,11 +148,6 @@ namespace h2n_test.Common
             SetWindowCompositionAttribute(windowHelper.Handle, ref data);
 
             Marshal.FreeHGlobal(accentPtr);
-        }
-
-        internal void DisableBlur()
-        {
-
         }
     }
 }
