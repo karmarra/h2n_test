@@ -125,13 +125,13 @@ namespace h2n_test.Common
             var accent = new AccentPolicy();
             var accentStructSize = Marshal.SizeOf(accent);
 
-            var currentVersion = Environment.OSVersion.Version;
-            if (currentVersion.Major > 6)
+            //всё равно на вин 7 у друга не сработало
+            //var currentVersion = Environment.OSVersion.Version;
+            //if (currentVersion.Major > 6)
                 accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
-             else if (currentVersion.Major == 6)
-                accent.AccentState = currentVersion.Minor > 1 ? AccentState.ACCENT_ENABLE_BLURBEHIND : AccentState.ACCENT_ENABLE_TRANSPARENTGRADIENT;
+             //else if (currentVersion.Major == 6)
+             //   accent.AccentState = currentVersion.Minor > 1 ? AccentState.ACCENT_ENABLE_BLURBEHIND : AccentState.ACCENT_ENABLE_TRANSPARENTGRADIENT;
 
-            accent.AccentState = AccentState.ACCENT_ENABLE_BLURBEHIND;
             accent.AccentFlags = 2;
             accent.GradientColor = 0x00FFFFFF;  
 
