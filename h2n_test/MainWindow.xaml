@@ -43,9 +43,16 @@
 
         <KeyBinding Key="D0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
         <KeyBinding Key="NumPad0" Command="{Binding AddNumberCommand}" CommandParameter="0" />
+
+        <KeyBinding Key="Back" Command="{Binding DeleteNumberCommand}"/>
+        <KeyBinding Key="Separator" Command="{Binding AddPointCommand}"/>
+
+        <KeyBinding Key="OemPlus" Command="{Binding PrepareBinaryOperCommand}" CommandParameter="7"/>
+        <KeyBinding Key="OemMinus" Command="{Binding PrepareBinaryOperCommand}" CommandParameter="8"/>
+        <KeyBinding Key="Multiply" Command="{Binding PrepareBinaryOperCommand}"  CommandParameter="9"/>
+        <KeyBinding Key="Divide" Command="{Binding PrepareBinaryOperCommand}"  CommandParameter="10"/>
+
     </common:CustomWindow.InputBindings>
-    <common:CustomWindow.Resources>
-    </common:CustomWindow.Resources>
     <Grid x:Name="BaseGrid" Grid.IsSharedSizeScope="True" common:BordersBesideMouse.Enabled="True">
         <Grid.Resources>
             <Style TargetType="{x:Type Button}" 
@@ -66,7 +73,7 @@
                    VerticalAlignment="Bottom"
                    Text="{Binding Field, UpdateSourceTrigger=PropertyChanged}"
                    TextWrapping="Wrap"
-                   FontSize="50"
+                   FontSize="40"
                    FontWeight="DemiBold"
                    Background="Transparent"
                    TextAlignment="Right"/>
@@ -81,7 +88,6 @@
                     <GradientStop Color="Transparent" Offset="1.0"/>
                 </RadialGradientBrush>
             </Border.Background>
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -111,122 +117,122 @@
                 </UniformGrid>
                 <UniformGrid Grid.Column="1" Columns="4">
                     <Button Content="%" 
-                        Command="{Binding PercentOperCommand}">
-                        <Button.Visibility>
-                            <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
-                                <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                            </MultiBinding>
-                        </Button.Visibility>
+                            Command="{Binding PercentOperCommand}">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                                    <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                </MultiBinding>
+                            </Button.Visibility>
                     </Button>
                     <Button Content="sqrt(x)"
-                        Command="{Binding UnaryOperCommand}"
-                        CommandParameter="2">
-                        <Button.Visibility>
-                            <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
-                                <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                            </MultiBinding>
-                        </Button.Visibility>
+                            Command="{Binding UnaryOperCommand}"
+                            CommandParameter="2">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                                    <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                </MultiBinding>
+                            </Button.Visibility>
                     </Button>
                     <Button Content="x^2"
-                        Command="{Binding UnaryOperCommand}"
-                        CommandParameter="3">
-                        <Button.Visibility>
-                            <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
-                                <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                            </MultiBinding>
-                        </Button.Visibility>
+                            Command="{Binding UnaryOperCommand}"
+                            CommandParameter="3">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                                    <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                </MultiBinding>
+                            </Button.Visibility>
                     </Button>
                     <Button Content="1/x"
-                        Command="{Binding UnaryOperCommand}"
-                        CommandParameter="5">
-                        <Button.Visibility>
-                            <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
-                                <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                            </MultiBinding>
-                        </Button.Visibility>
+                            Command="{Binding UnaryOperCommand}"
+                            CommandParameter="5">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{StaticResource SizeToVisibilityConverter}" ConverterParameter="True">
+                                    <Binding ElementName="BaseGrid" Path="ActualWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding ElementName="BaseGrid" Path="ActualHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                </MultiBinding>
+                            </Button.Visibility>
                     </Button>
 
-                    <Button  x:Name="Btn" Content="CE"
-            Command="{Binding CECommand}"/>
+                    <Button x:Name="Btn" 
+                            Content="CE"
+                            IsCancel="True"
+                            Command="{Binding CECommand}"/>
                     <Button Content="C"
-            Command="{Binding ClearCommand}"/>
+                            Command="{Binding ClearCommand}"/>
                     <Button Content="bksp"
-            Command="{Binding DeleteNumberCommand}"/>
+                            Command="{Binding DeleteNumberCommand}"/>
                     <Button Style="{StaticResource BinaryButtonStyle}"
-                    Content="/"
-            Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="10"/>
+                            Content="/"
+                            Command="{Binding PrepareBinaryOperCommand}"
+                            CommandParameter="10"/>
 
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="7"
-                         Command="{Binding AddNumberCommand}"
-                         CommandParameter="7"/>
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="8"
-                         Command="{Binding AddNumberCommand}"
-                         CommandParameter="8"/>
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="9"
-                         Command="{Binding AddNumberCommand}"
-                         CommandParameter="9"/>
-
-                <Button Style="{StaticResource BinaryButtonStyle}"
-                        Content="*"
-            Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="9"/>
-
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="4"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="4"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="5"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="5"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="6"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="6"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="7"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="7"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="8"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="8"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="9"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="9"/>
                     <Button Style="{StaticResource BinaryButtonStyle}"
-                        Content="+"
-            Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="7"/>
+                            Content="*"
+                            Command="{Binding PrepareBinaryOperCommand}"
+                            CommandParameter="9"/>
 
-                <Button Style="{StaticResource NumberButtonStyle}"
-                        Content="1"
-                        Command="{Binding AddNumberCommand}"
-                        CommandParameter="1"/>
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="2"
-                         Command="{Binding AddNumberCommand}"
-                         CommandParameter="2"/>
-                <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="3"
-                         Command="{Binding AddNumberCommand}"
-                         CommandParameter="3"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="4"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="4"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="5"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="5"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="6"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="6"/>
+                    <Button Style="{StaticResource BinaryButtonStyle}"
+                            Content="+"
+                            Command="{Binding PrepareBinaryOperCommand}"
+                            CommandParameter="7"/>
 
-                <Button Style="{StaticResource BinaryButtonStyle}"
-                        Content="-"
-            Command="{Binding PrepareBinaryOperCommand}"
-            CommandParameter="8"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="1"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="1"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="2"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="2"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="3"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="3"/>
 
+                    <Button Style="{StaticResource BinaryButtonStyle}"
+                            Content="-"
+                            Command="{Binding PrepareBinaryOperCommand}"
+                            CommandParameter="8"/>
                     <Button Content="+/-"
-            Command="{Binding UnaryOperCommand}"
-            CommandParameter="6"/>
-                    <Button  Style="{StaticResource NumberButtonStyle}"
-                         Content="0"
-            Command="{Binding AddNumberCommand}"
-            CommandParameter="0"/>
+                            Command="{Binding UnaryOperCommand}"
+                            CommandParameter="6"/>
+                    <Button Style="{StaticResource NumberButtonStyle}"
+                            Content="0"
+                            Command="{Binding AddNumberCommand}"
+                            CommandParameter="0"/>
                     <Button Content=","
-            Command="{Binding AddPointCommand}"/>
+                            Command="{Binding AddPointCommand}"/>
                     <Button Style="{StaticResource BinaryButtonStyle}"
-                        Content="="
-            Command="{Binding BinaryOperCommand}"/>
-
+                            IsDefault="True"
+                            Content="="
+                            Command="{Binding BinaryOperCommand}"/>
                 </UniformGrid>
             </Grid>
         </Border>

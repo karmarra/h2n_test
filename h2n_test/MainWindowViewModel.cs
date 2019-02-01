@@ -15,7 +15,6 @@ namespace h2n_test
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private readonly NumberFormatInfo _numberFormatInfo;
         private double _left;
         private double _right;
         private bool _repeat;
@@ -49,38 +48,30 @@ namespace h2n_test
 
         public MainWindowViewModel()
         {
-            _numberFormatInfo = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-            _numberFormatInfo.NumberGroupSeparator = " ";
-            _numberFormatInfo.NumberDecimalSeparator = ",";
-            //_numberFormatInfo. = 4;
-
-            AddNumberCommand = new RelayCommand(param => RunMethod(()=>AddNumber(param.ToString())));
-            DeleteNumberCommand = new RelayCommand(param => RunMethod(() => DeleteNumber()));
-            CECommand = new RelayCommand(param => RunMethod(() => CE()));
-            ClearCommand = new RelayCommand(param => RunMethod(() => Clear()));
-            AddPointCommand = new RelayCommand(param => RunMethod(() => AddPoint()));
+            AddNumberCommand = new RelayCommand(param => RunMethod(() => AddNumber(param.ToString())));
+            DeleteNumberCommand = new RelayCommand(param => RunMethod(DeleteNumber));
+            CECommand = new RelayCommand(param => RunMethod(CE));
+            ClearCommand = new RelayCommand(param => RunMethod(Clear));
+            AddPointCommand = new RelayCommand(param => RunMethod(AddPoint));
             UnaryOperCommand = new RelayCommand(param => RunMethod(() => UnaryOper(param.ToString())));
             PrepareBinaryOperCommand = new RelayCommand(param => RunMethod(() => PrepareBinaryOper(param.ToString())));
-            BinaryOperCommand = new RelayCommand(param => RunMethod(() => BinaryOper()));
-            PercentOperCommand = new RelayCommand(param => RunMethod(() => PreparePercentOper()));
+            BinaryOperCommand = new RelayCommand(param => RunMethod(BinaryOper));
+            PercentOperCommand = new RelayCommand(param => RunMethod(PreparePercentOper));
         }
 
         #region methods
 
         private string Format(double value)
         {
-            //var m= value.ToString("R");
-            return string.Format(_numberFormatInfo, "{0:#,0.##############}", value);
+            return value.ToString("G17");
         }
 
         private void AddNumber(string number)
         {
             if (_needClear) Field = "";
-            if (Field.Length >= 19)
+            if (Field.Length >= 16)
                 return;
             Field += number;
-            if (Double.TryParse(Field, out var value))
-                Field = Format(value);
             _needClear = false;
         }
 
@@ -89,9 +80,10 @@ namespace h2n_test
             if (_needClear)
             {
                 Field = "0,";
+                _needClear = false;
                 return;
             }
-            if (Field.Length >= 21 || Field.Contains(','))
+            if (Field.Length >= 16 || Field.Contains(','))
                 return;
             Field += ',';
         }
@@ -113,25 +105,23 @@ namespace h2n_test
             Field = "0";
             _repeat = false;
             _needClear = true;
+            _prepared = false;
         }
 
         private void Clear()
         {
-            Field = "0";
+            CE();
             _left = _right = 0;
             _operation = Operations.None;
-            _repeat = false;
-            _needClear = true;
-            _prepared = false;
         }
 
         private void UnaryOper(string operType)
         {
-                PrepareOper(operType);
-                _left = Calculator.CalcOperation(_operation, _left);
-                Field = Format(_left);
-                _needClear = true;
-                _prepared = false;
+            PrepareOper(operType);
+            _left = Calculator.CalcOperation(_operation, _left);
+            Field = Format(_left);
+            _needClear = true;
+            _prepared = false;
         }
 
         private void PrepareOper(string operType)
@@ -145,28 +135,28 @@ namespace h2n_test
 
         private void PrepareBinaryOper(string operType)
         {
-                PrepareOper(operType);
-                _repeat = false;
-                _prepared = true;
+            PrepareOper(operType);
+            _repeat = false;
+            _prepared = true;
         }
 
         private void BinaryOper()
         {
-                if (_operation == Operations.None) return;
-                if (!_repeat) Double.TryParse(Field, out _right);
-                _left = Calculator.CalcOperation(_operation, _left, _right);
-                Field = Format(_left);
-                _repeat = true;
-                _needClear = true;
-                _prepared = false;
+            if (_operation == Operations.None) return;
+            if (!_repeat) Double.TryParse(Field, out _right);
+            _left = Calculator.CalcOperation(_operation, _left, _right);
+            Field = Format(_left);
+            _repeat = true;
+            _needClear = true;
+            _prepared = false;
         }
 
         private void PreparePercentOper()
         {
-                Double.TryParse(Field, out _right);
-                _right = Calculator.CalcOperation(Operations.Percent, _left, _right);
-                Field = Format(_right);
-                _needClear = true;
+            Double.TryParse(Field, out _right);
+            _right = Calculator.CalcOperation(Operations.Percent, _left, _right);
+            Field = Format(_right);
+            _needClear = true;
         }
 
         private void RunMethod(Action action)

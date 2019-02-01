@@ -105,7 +105,7 @@ namespace h2n_test.Common
     public class RadGradientBrushExtension : MarkupExtension
     {
         public Color Color { get; set; } = Colors.Black;
-        public double Size { get; set; } = 50;
+        public double Size { get; set; } = 70;
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -163,7 +163,7 @@ namespace h2n_test.Common
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var isEnter = value != null && (bool)value;
-            return isEnter ? 0.7 : 0;
+            return isEnter ? 0.5 : 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

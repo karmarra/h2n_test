@@ -58,10 +58,5 @@ namespace h2n_test
                     throw new ArgumentOutOfRangeException(nameof(operationType), operationType.ToString());
             }
         }
-
-        public static double Percent(Operations operation, double left, double right)
-        {
-            return CalcOperation(operation, left, right / 100 * left );
-        }
     }
 }
